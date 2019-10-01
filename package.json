@@ -1,0 +1,28 @@
+{
+  "name": "orbitdns",
+  "version": "1.0.0",
+  "description": "Decentralized, P2P, cryptographically signed DNS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "orbitdns": "src/cli/cli.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0",
+    "bip39": "^3.0.2",
+    "buffer-json": "^2.0.0",
+    "datastore-fs": "^0.9.1",
+    "elliptic": "^6.5.1",
+    "ipfs": "^0.37.1",
+    "ipld-dag-cbor": "^0.15.0",
+    "node-ipc": "^9.1.1",
+    "node-named": "0.0.1",
+    "orbit-db": "^0.21.4",
+    "orbit-db-access-controllers": "^0.2.3",
+    "orbit-db-identity-provider": "^0.1.7",
+    "p-map-series": "^2.1.0"
+  }
+}

@@ -1,0 +1,4 @@
+node_modules
+orbitdb
+*-lock.json
+.credentials.json
