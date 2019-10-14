@@ -4,5 +4,8 @@ module.exports = [
     ...require('./orbitdns'),
     require('./version'),
     ...require('./domain'),
-    ...require('./key')
+    ...require('./key'),
+    ...require('./config'),
+    ...require('./repo'),
+    ...require('./db')
 ]

@@ -16,5 +16,15 @@ module.exports = [
             validate: resources.orbitdns.resolve.validate
         },
         handler: resources.key.gen.handler
+    },
+    {
+        method: "*",
+        path: "/api/v0/key/list",
+        handler: resources.key.list.handler
+    },
+    {
+        method: "*",
+        path: "/api/v0/key/get",
+        handler: resources.key.get.handler
     }
 ]

@@ -1,5 +1,6 @@
 const EC = require('elliptic').ec;
 const bip39 = require('bip39')
+const DagCbor = require('ipld-dag-cbor');
 
 class DataTypes {
 
@@ -17,10 +18,10 @@ class DNSKey {
         this.privatekey = privatekey;
     }
     /**
-     * Export as a signed certificate.
+     * Exports as CBOR dag
      */
-    exportAsCert() {
-
+    toDagCbor() {
+        return DagCbor.util.serialize(this.clean())
     }
     /**
      * MUST DO BEFORE PUBLIC EXPORT!
@@ -74,9 +75,18 @@ class DNSKey {
             DNSKey[prop] = obj[prop];
         return DNSKey;
     }
+    static fromDagCbor(bin) {
+        return DNSKey.cast(DagCbor.util.deserialize(bin))
+    }
 }
-class MultisigKey {
+/**
+ * Multi sig key
+ */
+class MSK {
 
+}
+class CMSK {
+    
 }
 class OrbitName {
     /**

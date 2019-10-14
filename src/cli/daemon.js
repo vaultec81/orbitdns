@@ -1,6 +1,8 @@
 const OrbitDNS = require('../core')
 const HttpApi = require('../http')
 const Resolver = require('../core/resolver')
+const fs = require('fs')
+const path = require('path')
 
 class Daemon {
     constructor(options) {
@@ -25,6 +27,14 @@ class Daemon {
         if (this._httpApi._apiServers.length) {
             //await promisify(ipfs._repo.apiAddr.set)(this._httpApi._apiServers[0].info.ma)
         }
+        this._httpApi._apiServers.forEach(apiServer => {
+            var str = apiServer.info.ma.toString();
+            if(str.includes("0.0.0.0")) {
+                str = str.replace("0.0.0.0", "127.0.0.1")
+            }
+            console.log(str)
+            //fs.writeFileSync(path.join(this._options.directory, "apiaddr"), apiServer.info.ma.toString())
+        })
         console.log(Resolver)
         this.resolver = new Resolver(this._orbitdns);
         this.resolver.start();
@@ -37,6 +47,7 @@ class Daemon {
             
 
         ])
+        
         return this;
     }
 }

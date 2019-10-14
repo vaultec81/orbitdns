@@ -8,6 +8,10 @@ module.exports = {
     },
 
     handler(argv) {
-        console.log(argv)
+        argv.resolve((async () => {
+            //console.log(argv)
+            const orbitdns = await argv.getOrbitDNS()
+            console.log(orbitdns)
+        })()) 
     }
 }

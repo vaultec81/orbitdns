@@ -17,8 +17,8 @@ exports.get = {
         const domain = request.orig.params.domain.split("/");
         const basename = domain[0]; const type = domain[1];
 
-        var name = OrbitName.fromDnsName(basename); 
-        if(type) {
+        var name = OrbitName.fromDnsName(basename);
+        if (type) {
             name.setType(type);
         }
         let dataEncoding = request.query['data-encoding'];
@@ -33,7 +33,7 @@ exports.get = {
             throw Boom.badRequest(err);
         }
         console.log(result);
-        if(!result) {
+        if (!result) {
             return h.response({});
         }
         return h.response(result);
@@ -42,5 +42,18 @@ exports.get = {
 exports.list = {
     async handler(request, h) {
         const { orbitdns } = request.server.app;
+    }
+}
+exports.listRecords = {
+    async handler(request, h) {
+        const { orbitdns } = request.server.app;
+        const domain = request.orig.params.domain;
+        var res = await orbitdns.domain.listRecords(domain);
+        return h.response(res)
+    }
+}
+exports.setRecord = {
+    async handler(request, h) {
+
     }
 }

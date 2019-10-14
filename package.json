@@ -9,9 +9,18 @@
   "bin": {
     "orbitdns": "src/cli/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaultec81/orbitdns.git"
+  },
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vaultec81/orbitdns/issues"
+  },
+  "homepage": "https://github.com/vaultec81/orbitdns#readme",
   "dependencies": {
     "@hapi/hapi": "^18.4.0",
+    "base64url": "^3.0.1",
     "bip39": "^3.0.2",
     "buffer-json": "^2.0.0",
     "datastore-fs": "^0.9.1",
@@ -23,6 +32,7 @@
     "orbit-db": "^0.21.4",
     "orbit-db-access-controllers": "^0.2.3",
     "orbit-db-identity-provider": "^0.1.7",
-    "p-map-series": "^2.1.0"
+    "p-map-series": "^2.1.0",
+    "orbitdns-http-client": "^1.0.0"
   }
 }

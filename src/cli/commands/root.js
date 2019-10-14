@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  command: 'net <command>',
+  command: 'root <command>',
 
   description: 'Interact with root TLD management',
 

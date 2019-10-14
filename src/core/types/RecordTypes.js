@@ -20,7 +20,7 @@ class BaseRecord {
 }
 RecordTypes.A = class extends BaseRecord {
     constructor() {
-        super()
+        super();
         this.type = "A";
     }
     validate() {
@@ -30,7 +30,8 @@ RecordTypes.A = class extends BaseRecord {
         }
         return true;
     }
-    static create(name, target, ttl) {
+    static create(name, target, options) {
+        const { ttl } = options;
         var r = new RecordTypes.A();
         r.name = name;
         var record = {};
@@ -60,7 +61,8 @@ RecordTypes.AAAA = class extends BaseRecord {
         }
         return true;
     }
-    static create(name, target, ttl) {
+    static create(name, target, options) {
+        const { ttl } = options;
         var r = new RecordTypes.AAAA();
         r.name = name;
         var record = {};
@@ -79,7 +81,7 @@ RecordTypes.AAAA = class extends BaseRecord {
 }
 RecordTypes.TXT = class extends BaseRecord {
     constructor() {
-        super()
+        super();
         this.type = "TXT";
     }
     validate() {
@@ -88,7 +90,8 @@ RecordTypes.TXT = class extends BaseRecord {
         }
         return true;
     }
-    static create(name, data, ttl) {
+    static create(name, data, options) {
+        const { ttl } = options;
         var r = new RecordTypes.TXT();
         r.name = name;
         var record = {};
@@ -128,7 +131,8 @@ RecordTypes.SOA = class extends BaseRecord {
         }
         return false;
     }
-    static create(name, DNSKeys, serial, expire, ttl) {
+    static create(name, DNSKeys, extra) {
+        const { serial, expire, ttl } = extra;
         var r = new RecordTypes.SOA()
         r.name = name; //FQDN or TLD.
         r.DNSKeys = DNSKeys; //Array
@@ -141,7 +145,6 @@ RecordTypes.SOA = class extends BaseRecord {
     }
     static cast(obj) {
         var r = new RecordTypes.SOA();
-
         for (var prop in obj)
             r[prop] = obj[prop];
         return r;
@@ -165,7 +168,8 @@ RecordTypes.CNAME = class extends BaseRecord {
         super();
         this.type = "CNAME";
     }
-    static create(name, target, ttl) {
+    static create(name, target, options) {
+        const { ttl } = options;
         var r = new RecordTypes.CNAME();
         r.name = name;
         var record = {};

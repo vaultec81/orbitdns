@@ -158,6 +158,10 @@ class orbitDNSAC extends EventEmitter {
   
   // Return true if entry is allowed to be added to the database
   async canAppend (entry, identityProvider) {
+    if(entry.payload.op === "DEL") {
+      return false; //Block deletion of records temporarily until a proper system for record deletion is created.
+    }
+    if(entry)
     console.log(entry.payload.value)
     for(var address in this._orbitdb.stores) {
       var split = address.split("/");

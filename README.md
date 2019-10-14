@@ -1,5 +1,6 @@
 <a href="https://localmesh.org">
 <img src="https://img.shields.io/badge/Sponsored%20by-localmesh.org-green">
+<img src="https://img.shields.io/badge/matrix-%23orbitdns%3Amatrix.org-blue">
 </a>
 
 # OrbitDNS

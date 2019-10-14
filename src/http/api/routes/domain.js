@@ -23,5 +23,20 @@ module.exports = [
         method: "*",
         path: "/api/v0/domain/list",
         handler: resources.domain.list.handler
+    },
+    {
+        method: "*",
+        path: "/api/v0/domain/listrecords/{domain*}",
+        options: {
+            handler: resources.domain.listRecords.handler,
+            validate: {
+                params: {
+                    domain: Joi.string().required()
+                }
+            },
+            pre: [
+                //{ method: resources.domain.get.parseArgs, assign: 'args' }
+            ]
+        }
     }
 ]

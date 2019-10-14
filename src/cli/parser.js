@@ -12,7 +12,7 @@ const parser = yargs
     })
     .epilog(utils.ipfsPathHelp)
     .middleware(argv => Object.assign(argv, {
-        getIpfs: utils.singleton(cb => utils.getIPFS(argv, cb)),
+        getOrbitDNS: utils.singleton(cb => utils.getOrbitDNS(argv, cb)),
         print: utils.print,
         isDaemonOn: utils.isDaemonOn,
         getRepoPath: utils.getRepoPath

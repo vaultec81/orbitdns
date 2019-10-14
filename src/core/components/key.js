@@ -24,32 +24,54 @@ class key {
      * @returns {Promise<null>}
      */
     async gen(name, type, seed) {
+        console.log(name)
+        if (!type) {
+            type = "ed25519"; //Default
+        }
         var ec = new EC(type);
         let entropy;
         let pair;
-        if(seed) {
+        if (seed) {
             entropy = bip39.mnemonicToSeedSync(seed);
             pair = ec.genKeyPair({ entropy: entropy });
         } else {
-           pair = ec.genKeyPair();
+            pair = ec.genKeyPair();
         }
-        var dnskey = new DataTypes.DNSKey(type, pair.getPublic(true, 'hex'), pair.getPrivate('hex'));
-        var key = {dnskey: dnskey};
-        await this.self.repo.keystore.put(new Key(name), CborDag.util.serialize(dnskey));
+        var dnskey = new DNSKey(type, pair.getPublic(true, 'hex'), pair.getPrivate('hex'));
+        var key = { dnskey: dnskey };
+        await this.self.repo.keystore.put(new Key(name), CborDag.util.serialize(key));
     }
     /**
      * @param {String} name
      * @returns {Promise<DNSKey>}
      */
     async get(name) {
-        const buf = await this.self.repo.keystore.get(new Key(name));
-        return CborDag.util.deserialize(buf);
+        if(await this.self.repo.keystore.has(new Key(name))) {
+            const buf = await this.self.repo.keystore.get(new Key(name));
+            return CborDag.util.deserialize(buf);
+        }
+        return null;
     }
+    /**
+     * Gets public key as hex string
+     * @param {String} name 
+     */
     async getPublicKey(name) {
-
+        var key = await this.get(name);
+        if(key === null) {
+            return null;
+        }
+        return key.publickey;
     }
+    /**
+     * Get key as DNSKey
+     * @param {String} name 
+     */
     async getDNSKey(name) {
         var key = await this.get(name);
+        if(key === null) {
+            return null;
+        }
         return DNSKey.cast(key.dnskey);
     }
     /**
@@ -71,9 +93,21 @@ class key {
      * renames orbitdns key
      * @param {String} name 
      * @param {String} newname 
-     */
+     */ 
     async rename(name, newname) {
-        
+        if(!(await this.self.repo.keystore.has(new Key(name)))) {
+            return null;
+        }
+        var key = await this.self.repo.keystore.get(new Key(name));
+        await this.self.repo.keystore.delete(new Key(name));
+        await this.self.repo.keystore.put(new Key(newname), key);
+    }
+    async list() {
+        let res = [];
+        for await (const q of this.self.repo.keystore.query({keysOnly:true})) {
+            res.push(q.key.toString().replace("/",""))
+        }
+        return res;
     }
     /**
      * Creates a BIP39 memoric seed.

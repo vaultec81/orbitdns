@@ -30,7 +30,7 @@ class Resolver {
             options = {host: "::ffff:127.0.0.1", port: 53};
         }
         const {address} = options;
-
+        
         this.port = options.port; this.host = options.host;
     }
     async query(name, type) {

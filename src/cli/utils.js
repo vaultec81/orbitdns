@@ -1,8 +1,12 @@
 const fs = require('fs')
 const os = require('os')
+const multiaddr = require('multiaddr')
+const path = require('path')
 const promisify = require('promisify-es6')
-
-
+const debug = require('debug')
+const log = debug('cli')
+log.error = debug('cli:error')
+const Core = require("../core/core")
 
 exports.getRepoPath = () => {
     return process.env.ORBITDNS_PATH || os.homedir() + '/.orbitdns'
@@ -10,8 +14,9 @@ exports.getRepoPath = () => {
 
 exports.isDaemonOn = isDaemonOn
 function isDaemonOn() {
+    console.log(path.join(exports.getRepoPath(), 'apiaddr'))
     try {
-        fs.readFileSync(path.join(exports.getRepoPath(), 'api'))
+        fs.readFileSync(path.join(exports.getRepoPath(), 'apiaddr'))
         log('daemon is on')
         return true
     } catch (err) {
@@ -25,20 +30,21 @@ function getAPICtl(apiAddr) {
         throw new Error('daemon is not on')
     }
     if (!apiAddr) {
-        const apiPath = path.join(exports.getRepoPath(), 'api')
+        const apiPath = path.join(exports.getRepoPath(), 'apiaddr')
         apiAddr = multiaddr(fs.readFileSync(apiPath).toString()).toString()
     }
     // Required inline to reduce startup time
-    //const APIctl = require('ipfs-http-client')
-    return APIctl(apiAddr)
+    const APIctl = require('orbitdns-http-client')
+    return new APIctl(apiAddr)
 }
-exports.getIPFS = async (argv) => {
+exports.getOrbitDNS = async (argv, callback) => {
+    console.log(isDaemonOn())
+    console.log(argv.api)
     if (argv.api || isDaemonOn()) {
         return callback(null, getAPICtl(argv.api), promisify((cb) => cb()))
     }
-
     // Required inline to reduce startup time
-    const core = require('../core/')
+    const Core = require('../core/')
     const node = new Core({
         directory: exports.getRepoPath()
     })

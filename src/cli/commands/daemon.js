@@ -1,4 +1,5 @@
 const Yargs = require('yargs')
+const fs = require('fs');
 
 module.exports = {
     command: "daemon",
@@ -22,6 +23,7 @@ module.exports = {
                 await daemon.start();
                 daemon._httpApi._apiServers.forEach(apiServer => {
                     print(`API listening on ${apiServer.info.ma.toString()}`)
+                    
                 })
             } catch (err) {
                 console.log(err)

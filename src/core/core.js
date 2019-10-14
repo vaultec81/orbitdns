@@ -111,7 +111,7 @@ class Core extends EventEmitter {
             name.setType("SOA");
         }
         
-
+        
 
     }
     /**
@@ -134,7 +134,7 @@ class Core extends EventEmitter {
             name.setType("A");
         }
 
-        var result = this.db.get(name.toOrbitName())
+        var result = await this.db.get(name.toOrbitName())
         if(format === "targets" && type !== "SOA") {
             var out = [];
             for(var value of result) {
