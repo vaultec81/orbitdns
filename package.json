@@ -4,6 +4,7 @@
   "description": "Decentralized, P2P, cryptographically signed DNS.",
   "main": "index.js",
   "scripts": {
+    "start": "node src/cli/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -25,13 +26,11 @@
     "buffer-json": "^2.0.0",
     "datastore-fs": "^0.9.1",
     "elliptic": "^6.5.1",
-    "ipfs": "^0.37.1",
+    "ipfs": "^0.40.0",
     "ipld-dag-cbor": "^0.15.0",
     "node-ipc": "^9.1.1",
     "node-named": "0.0.1",
-    "orbit-db": "^0.21.4",
-    "orbit-db-access-controllers": "^0.2.3",
-    "orbit-db-identity-provider": "^0.1.7",
+    "orbit-db": "^0.23.0",
     "p-map-series": "^2.1.0",
     "orbitdns-http-client": "^1.0.0"
   }
